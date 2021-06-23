@@ -1,31 +1,35 @@
-const refs = {
-  daysEl: document.querySelector('[data-value="days"]'),
-  hoursEl: document.querySelector('[data-value="hours"]'),
-  minsEl: document.querySelector('[data-value="mins"]'),
-  secsEl: document.querySelector('[data-value="secs"]'),
-};
-
 class CountdownTimer {
   constructor({ selector, targetDate }) {
     this.timerId = null;
-    this.selector = selector;
     this.targetDate = targetDate;
+
+    this.selector = document.querySelector(selector);
+    this.daysEl = this.selector.querySelector('[data-value="days"]');
+    this.hoursEl = this.selector.querySelector('[data-value="hours"]');
+    this.minsEl = this.selector.querySelector('[data-value="mins"]');
+    this.secsEl = this.selector.querySelector('[data-value="secs"]');
+
     this.start();
   }
 
-  start() {
-    Object.values(refs).forEach((element) => {
-      element.innerHTML = `<span class="value previous">${
-        this.getTimeComponents(this.targetDate - Date.now())[
-          element.dataset.value
-        ]
-      }</span>
+  initClockSection(element) {
+    element.innerHTML = `<span class="value previous">${
+      this.getTimeComponents(this.targetDate - Date.now())[
+        element.dataset.value
+      ]
+    }</span>
       <span class="value current">${
         this.getTimeComponents(this.targetDate - Date.now())[
           element.dataset.value
         ]
       }</span>`;
-    });
+  }
+
+  start() {
+    this.initClockSection(this.daysEl);
+    this.initClockSection(this.hoursEl);
+    this.initClockSection(this.minsEl);
+    this.initClockSection(this.secsEl);
 
     this.timerId = setInterval(() => {
       const currentDate = Date.now();
@@ -59,28 +63,33 @@ class CountdownTimer {
     return String(value).padStart(2, "0");
   }
 
-  updateClockface(timeComponents) {
-    Object.values(refs).forEach((element) => {
-      const prevEl = element.querySelector(".previous");
-      const curEl = element.querySelector(".current");
+  updateClockSection(element, value) {
+    const prevEl = element.querySelector(".previous");
+    const curEl = element.querySelector(".current");
 
-      prevEl.classList.remove("active");
-      curEl.classList.remove("active");
+    prevEl.classList.remove("active");
+    curEl.classList.remove("active");
 
-      curEl.textContent = prevEl.textContent;
-      prevEl.textContent = timeComponents[element.dataset.value];
+    curEl.textContent = prevEl.textContent;
+    prevEl.textContent = value;
 
-      setTimeout(() => {
-        if (prevEl.textContent !== curEl.textContent) {
-          prevEl.classList.add("active");
-          curEl.classList.add("active");
-        }
-      }, 1);
-    });
+    setTimeout(() => {
+      if (prevEl.textContent !== curEl.textContent) {
+        prevEl.classList.add("active");
+        curEl.classList.add("active");
+      }
+    }, 1);
+  }
+
+  updateClockface({ days, hours, mins, secs }) {
+    this.updateClockSection(this.daysEl, days);
+    this.updateClockSection(this.hoursEl, hours);
+    this.updateClockSection(this.minsEl, mins);
+    this.updateClockSection(this.secsEl, secs);
   }
 }
 
 const timer = new CountdownTimer({
-  selector: "#timer-1",
-  targetDate: new Date("Jun 27, 2021, 10:55 PM"),
+  selector: "#timer-2",
+  targetDate: new Date("Jul 27, 2021, 10:55 PM"),
 });

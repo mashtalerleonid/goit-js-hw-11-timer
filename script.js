@@ -1,15 +1,14 @@
-const refs = {
-  daysEl: document.querySelector('[data-value="days"]'),
-  hoursEl: document.querySelector('[data-value="hours"]'),
-  minsEl: document.querySelector('[data-value="mins"]'),
-  secsEl: document.querySelector('[data-value="secs"]'),
-};
-
 class CountdownTimer {
   constructor({ selector, targetDate }) {
     this.timerId = null;
-    this.selector = selector;
     this.targetDate = targetDate;
+
+    this.selector = document.querySelector(selector);
+    this.daysEl = this.selector.querySelector('[data-value="days"]');
+    this.hoursEl = this.selector.querySelector('[data-value="hours"]');
+    this.minsEl = this.selector.querySelector('[data-value="mins"]');
+    this.secsEl = this.selector.querySelector('[data-value="secs"]');
+
     this.start();
   }
 
@@ -49,14 +48,19 @@ class CountdownTimer {
     return String(value).padStart(2, "0");
   }
 
-  updateClockface(timeComponents) {
-    Object.values(refs).forEach((element) => {
-      element.textContent = timeComponents[element.dataset.value];
-    });
+  updateClockSection(element, value) {
+    element.textContent = value;
+  }
+
+  updateClockface({ days, hours, mins, secs }) {
+    this.updateClockSection(this.daysEl, days);
+    this.updateClockSection(this.hoursEl, hours);
+    this.updateClockSection(this.minsEl, mins);
+    this.updateClockSection(this.secsEl, secs);
   }
 }
 
 const timer = new CountdownTimer({
   selector: "#timer-1",
-  targetDate: new Date("Jun 29, 2021, 5:56 PM"),
+  targetDate: new Date("Jul 29, 2021, 5:10 PM"),
 });
