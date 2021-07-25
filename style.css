@@ -49,3 +49,71 @@ body {
   transform: translateY(100px);
   transition: transform 600ms ease-in-out;
 }
+
+/* -------------------- */
+.tick {
+  font-size: 30px;
+  white-space: nowrap;
+  font-family: arial, sans-serif;
+}
+
+.tick-flip,
+.tick-text-inline {
+  font-size: 2.5em;
+}
+
+.tick-label {
+  margin-top: 1em;
+  font-size: 1em;
+}
+
+.tick-char {
+  width: 1.5em;
+}
+
+.tick-text-inline {
+  display: inline-block;
+  text-align: center;
+  min-width: 1em;
+}
+
+.tick-text-inline + .tick-text-inline {
+  margin-left: -0.325em;
+}
+
+.tick-group {
+  margin: 0 0.5em;
+  text-align: center;
+}
+
+/* body {
+  background-color: rgb(225, 247, 100) !important;
+} */
+
+.tick-text-inline {
+  color: #595d63 !important;
+}
+
+.tick-label {
+  color: #595d63 !important;
+}
+
+.tick-flip-panel {
+  color: rgb(241, 245, 10) !important;
+}
+
+.tick-flip {
+  /* font-family: !important;  */
+}
+
+.tick-flip-panel-text-wrapper {
+  line-height: 1.45 !important;
+}
+
+.tick-flip-panel {
+  background-color: #230cf1 !important;
+}
+
+.tick-flip {
+  border-radius: 0.12em !important;
+}
